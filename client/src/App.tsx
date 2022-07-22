@@ -1,36 +1,24 @@
-import React from "react";
-import "./App.css";
-import { books } from "./testData";
-import Table from "react-bootstrap/Table";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import './App.css';
+import { Container, Col, Row } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BookTable from './components/BookTable';
+import BookForm from './components/BookForm';
 
 function App() {
   return (
-    <div className="App">
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-          </tr>
-        </thead>
-        <tbody>
-          {books.map((item) => (
-            <TableRow book={item} />
-          ))}
-        </tbody>
-      </Table>
-      <p>Total count: {books.length}</p>
+    <div className='App'>
+      <Container fluid>
+        <Row>
+          <Col xs={12} md={6}>
+            <BookTable />
+          </Col>
+          <Col xs={12} md={6}>
+            <BookForm />
+          </Col>
+        </Row>
+      </Container>
     </div>
-  );
-}
-
-function TableRow({ book }: { book: Book }) {
-  return (
-    <tr>
-      <td>{book.title}</td>
-      <td>{book.author}</td>
-    </tr>
   );
 }
 
