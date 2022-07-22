@@ -183,32 +183,58 @@ export let books: Book[] = [
   },
   {
     id: 27,
-    title: '',
-    author: '',
-    description: '',
+    title: 'Jonathan Livingston Seagull',
+    author: 'Richard Bach',
+    description:
+      'The book tells the story of Jonathan Livingston Seagull, a seagull who is bored with daily squabbles over food. Seized by a passion for flight, he pushes himself and learns everything he can about flying.',
   },
   {
     id: 28,
-    title: '',
-    author: '',
-    description: '',
+    title: 'The Very Hungry Caterpillar',
+    author: 'Eric Carle',
+    description:
+      'The book features a very hungry caterpillar eating foodstuff before pupating and emerging as a butterfly. The book has won many children’s literature awards and major graphic design awards. Its "eaten" holes and collage artwork were innovative for its time. The book includes counting, days of the week, food, and butterfly’s life cycle which contribute to juvenile education.',
   },
   {
     id: 29,
-    title: '',
-    author: '',
-    description: '',
+    title: 'A Message to Garcia',
+    author: 'Elbert Hubbard',
+    description:
+      'The book expresses the value of individual initiative and conscientiousness in work. As its primary example, the essay uses a dramatized version of a daring escapade performed by an American soldier, 1st Lt. Andrew S. Rowan, just prior to the Spanish–American War.',
   },
   {
     id: 30,
-    title: '',
-    author: '',
-    description: '',
+    title: 'To Kill a Mockingbird',
+    author: 'Harper Lee',
+    description:
+      "Despite dealing with the serious issues of rape and racial inequality, the novel is renowned for its warmth and humor. Atticus Finch, the narrator's father, has served as a moral hero for many readers and as a model of integrity for lawyers.",
   },
   {
     id: 31,
-    title: '',
-    author: '',
-    description: '',
-  },        
+    title: 'Angels & Demons',
+    author: 'Dan Brown',
+    description:
+      "The novel introduces the character Robert Langdon, who recurs as the protagonist of Brown's subsequent novels. Angels & Demons shares many stylistic literary elements with its sequels, such as conspiracies of secret societies, a single-day time frame, and the Catholic Church.",
+  },
+  {
+    id: 32,
+    title: 'Kane and Abel',
+    author: 'Jeffrey Archer',
+    description:
+      'The book tells the stories of two men born worlds apart. They have nothing in common except the same date of birth (18 April 1906) and a zeal to succeed in life. William Lowell Kane is a wealthy and powerful elite class while Abel Rosnovski (originally named Władek Koskiewicz) is a Pole who was born in a situation of great poverty and eventually migrated to the United States.',
+  },
+  {
+    id: 33,
+    title: 'War and Peace',
+    author: 'Leo Tolstoy',
+    description:
+      'The novel chronicles the French invasion of Russia and the impact of the Napoleonic era on Tsarist society through the stories of five Russian aristocratic families.',
+  },
+  {
+    id: 34,
+    title: 'The Adventures of Pinocchio',
+    author: 'Carlo Collodi',
+    description:
+      "The book is about the mischievous adventures of an animated marionette named Pinocchio and his father, a poor woodcarver named Geppetto. A universal icon and a metaphor of the human condition, the book is considered a canonical piece of children's literature and has had great impact on world culture.",
+  },
 ];
