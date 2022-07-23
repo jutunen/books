@@ -10,10 +10,10 @@ function App() {
     <div className='App'>
       <Container fluid>
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} lg={6} className='app_left_col'>
             <BookTable />
           </Col>
-          <Col xs={12} md={6}>
+          <Col xs={12} lg={6} className='app_right_col'>
             <BookForm />
           </Col>
         </Row>

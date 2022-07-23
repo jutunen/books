@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
+import '../styles/BookForm.css';
 
 function BookForm() {
   const [title, setTitle] = useState('');
@@ -26,7 +27,7 @@ function BookForm() {
   }, [store, store.selectedBookId]);
 
   return (
-    <Form>
+    <Form id='bookform'>
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -56,7 +57,7 @@ function BookForm() {
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <Form.Control
-          as="textarea" 
+          as='textarea'
           rows={5}
           type='string'
           placeholder='book description'
@@ -68,6 +69,9 @@ function BookForm() {
           {errorMsg_1}
         </Form.Control.Feedback>
       </Form.Group>
+      <Button variant='primary'>Save new</Button>
+      <Button variant='primary'>Save</Button>
+      <Button variant='primary'>Delete</Button>
     </Form>
   );
 }
