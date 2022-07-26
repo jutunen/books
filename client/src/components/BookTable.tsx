@@ -1,10 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
+import * as api from '../api';
 
 function BookTable() {
   const store = useContext(StoreContext);
+
+  useEffect(() => {
+    const getData = async () => {
+      //store.showAppLoader();
+      try {
+        const response = await api.getRequest('book');
+        // console.log(response.data);
+        store.setBooks(response.data);
+      } catch (error) {
+        //store.showModal(getModalErrorContent(url, error?.response?.status));
+      }
+      //store.hideAppLoader();
+    };
+    getData();
+  }, []);
 
   return (
     <>
@@ -43,9 +59,7 @@ function TableRow({ book }: { book: Book }) {
   };
 
   return (
-    <tr
-      onClick={() => store.setSelectedBookId(book.id)}
-    >
+    <tr onClick={() => store.setSelectedBookId(book.id)}>
       <td style={book.id === store.selectedBookId ? selectedCellStyleLeft : {}}>
         {book.title}
       </td>

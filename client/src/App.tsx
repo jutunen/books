@@ -4,6 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookTable from './components/BookTable';
 import BookForm from './components/BookForm';
+import BookModal from './components/BookModal';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </Col>
         </Row>
       </Container>
+      <BookModal />
     </div>
   );
 }
