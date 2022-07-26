@@ -17,7 +17,7 @@ export class BookController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto): Promise<any[]> {
-    return await this.knex('books').insert(createBookDto);
+    return await this.knex('books').insert(createBookDto).returning('id');
   }
 
   @Get()
@@ -42,6 +42,6 @@ export class BookController {
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<any[]> {
-    return await this.knex('books');
+    return await this.knex('books').where({ id }).del();
   }
 }
