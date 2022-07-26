@@ -3,14 +3,16 @@ import { Form, Button } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
 import '../styles/BookForm.css';
+import * as api from '../api';
 
 function BookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [description, setDescription] = useState('');
-  const [validated, setValidated] = useState(false);
-  const [errorMsg_1, setErrorMsg_1] = useState('');
-  const [errorMsg_2, setErrorMsg_2] = useState('');
+  // const [validated, setValidated] = useState(false);
+  const [titleErrorMsg, setTitleErrorMsg] = useState('');
+  const [authorErrorMsg, setAuthorErrorMsg] = useState('');
+  const [descriptionErrorMsg, setDescriptionErrorMsg] = useState('');
 
   const store = useContext(StoreContext);
 
@@ -23,8 +25,59 @@ function BookForm() {
         setAuthor(book.author);
         setDescription(book.description);
       }
+    } else {
+      setTitle('');
+      setAuthor('');
+      setDescription('');
     }
   }, [store, store.selectedBookId]);
+
+  function validateInputs() {
+    let inputsAreValid = true;
+    if (title.trim().length === 0) {
+      setTitleErrorMsg('Add title');
+      inputsAreValid = false;
+    } else {
+      setTitleErrorMsg('');
+    }
+    if (author.trim().length === 0) {
+      setAuthorErrorMsg('Add author');
+      inputsAreValid = false;
+    } else {
+      setAuthorErrorMsg('');
+    }
+    if (description.trim().length === 0) {
+      setDescriptionErrorMsg('Add description');
+      inputsAreValid = false;
+    } else {
+      setDescriptionErrorMsg('');
+    }
+    return inputsAreValid;
+  }
+
+  async function handleSaveNew() {
+    if (!validateInputs()) {
+      return;
+    }
+
+    let book: Book = {
+      title,
+      author,
+      description,
+    };
+
+    try {
+      let result = await api.saveNewRequest(book);
+      console.log('result:');
+      console.log(result);
+      console.log(result.data[0].id);
+      if (result?.data[0]?.id) {
+        store.setBookIdToBeSelectedAfterBooksFetch(result?.data[0]?.id);
+      }
+    } catch (error) {
+      //store.showErrorModal();
+    }
+  }
 
   return (
     <Form id='bookform'>
@@ -35,10 +88,10 @@ function BookForm() {
           placeholder='book title'
           value={title}
           onChange={(ev) => setTitle(ev.target.value)}
-          isInvalid={!!validated && !!errorMsg_1}
+          isInvalid={!!titleErrorMsg}
         />
         <Form.Control.Feedback type='invalid'>
-          {errorMsg_1}
+          {titleErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
@@ -48,10 +101,10 @@ function BookForm() {
           placeholder='book author'
           value={author}
           onChange={(ev) => setAuthor(ev.target.value)}
-          isInvalid={!!validated && !!errorMsg_1}
+          isInvalid={!!authorErrorMsg}
         />
         <Form.Control.Feedback type='invalid'>
-          {errorMsg_1}
+          {authorErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group>
@@ -63,15 +116,27 @@ function BookForm() {
           placeholder='book description'
           value={description}
           onChange={(ev) => setDescription(ev.target.value)}
-          isInvalid={!!validated && !!errorMsg_1}
+          isInvalid={!!descriptionErrorMsg}
         />
         <Form.Control.Feedback type='invalid'>
-          {errorMsg_1}
+          {descriptionErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Button variant='primary'>Save new</Button>
+      <Button variant='primary' onClick={() => handleSaveNew()}>
+        Save new
+      </Button>
       <Button variant='primary'>Save</Button>
-      <Button variant='primary'>Delete</Button>
+      <Button
+        variant='primary'
+        onClick={() =>
+          store.showDialogModal({
+            bookId: store.selectedBookId,
+            bookTitle: title,
+          })
+        }
+      >
+        Delete
+      </Button>
     </Form>
   );
 }

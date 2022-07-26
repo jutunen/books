@@ -9,22 +9,22 @@ function BookModal() {
   return (
     <Modal
       centered
-      show={store.modalIsVisible}
-      onHide={() => store.hideModal()}
+      show={store.bookModalIsVisible}
+      onHide={() => store.hideBookModal()}
     >
       <Modal.Header closeButton>
-        <Modal.Title>{store.modalContent.title}</Modal.Title>
+        <Modal.Title>{store.bookModalContent.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ whiteSpace: 'pre-wrap', overflow: 'hidden' }}>
-        {store.modalContent.body}
+        {store.bookModalContent.body}
       </Modal.Body>
       <Modal.Footer>
         <Button
           variant='secondary'
           style={{ color: 'white' }}
-          onClick={() => store.hideModal()}
+          onClick={() => store.hideBookModal()}
         >
-          {store.modalContent.button}
+          {store.bookModalContent.button}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BookTable from './components/BookTable';
 import BookForm from './components/BookForm';
 import BookModal from './components/BookModal';
+import DialogModal from './components/DialogModal';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         </Row>
       </Container>
       <BookModal />
+      <DialogModal />
     </div>
   );
 }

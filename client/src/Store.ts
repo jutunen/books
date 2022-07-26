@@ -6,23 +6,42 @@ class Store {
   //books = books;
   books: Book[] = [];
   selectedBookId = 0;
-  modalIsVisible = false;
-  modalContent: any = {};
+  bookIdToBeSelectedAfterBooksFetch = 0;
+  bookModalIsVisible = false;
+  bookModalContent: any = {};
+  dialogModalIsVisible = false;
+  dialogModalContent: any = {};
 
   constructor() {
     makeObservable(this, {
       books: observable,
       setBooks: action,
+      deleteBook: action,
       selectedBookId: observable,
       setSelectedBookId: action,
-      modalIsVisible: observable,
-      showModal: action,
-      hideModal: action,
+      bookModalIsVisible: observable,
+      showBookModal: action,
+      hideBookModal: action,
+      dialogModalIsVisible: observable,
+      showDialogModal: action,
+      hideDialogModal: action,
+      bookIdToBeSelectedAfterBooksFetch: observable,
+      setBookIdToBeSelectedAfterBooksFetch: action,
     });
   }
 
   setBooks(books: Book[]) {
     this.books = books;
+  }
+
+  setBookIdToBeSelectedAfterBooksFetch(id: number) {
+    console.log(this.bookIdToBeSelectedAfterBooksFetch);
+    this.bookIdToBeSelectedAfterBooksFetch = id;
+    console.log(this.bookIdToBeSelectedAfterBooksFetch);
+  }
+
+  deleteBook(id: number) {
+    this.books = this.books.filter((book) => book.id !== id);
   }
 
   setSelectedBookId(id: number) {
@@ -33,15 +52,25 @@ class Store {
     return this.books.find((book) => book.id === id);
   }
 
-  showModal(content: any) {
-    this.modalContent.title = content.title;
-    this.modalContent.body = content.body;
-    this.modalContent.button = content.button;
-    this.modalIsVisible = true;
+  showBookModal(content: any) {
+    this.bookModalContent.title = content.title;
+    this.bookModalContent.body = content.body;
+    this.bookModalContent.button = content.button;
+    this.bookModalIsVisible = true;
   }
 
-  hideModal() {
-    this.modalIsVisible = false;
+  hideBookModal() {
+    this.bookModalIsVisible = false;
+  }
+
+  showDialogModal(content: any) {
+    this.dialogModalContent.bookId = content.bookId;
+    this.dialogModalContent.bookTitle = content.bookTitle;
+    this.dialogModalIsVisible = true;
+  }
+
+  hideDialogModal() {
+    this.dialogModalIsVisible = false;
   }
 }
 

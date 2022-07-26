@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Table } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
@@ -6,6 +6,7 @@ import * as api from '../api';
 
 function BookTable() {
   const store = useContext(StoreContext);
+  //const selectedRowRef = useRef(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -14,13 +15,20 @@ function BookTable() {
         const response = await api.getRequest('book');
         // console.log(response.data);
         store.setBooks(response.data);
+        if (store.bookIdToBeSelectedAfterBooksFetch) {
+          store.setSelectedBookId(
+            Number(store.bookIdToBeSelectedAfterBooksFetch)
+          );
+        }
       } catch (error) {
         //store.showModal(getModalErrorContent(url, error?.response?.status));
       }
       //store.hideAppLoader();
     };
     getData();
-  }, []);
+  }, [store, store.bookIdToBeSelectedAfterBooksFetch]);
+
+  console.log('BookTable render!');
 
   return (
     <>
@@ -59,7 +67,7 @@ function TableRow({ book }: { book: Book }) {
   };
 
   return (
-    <tr onClick={() => store.setSelectedBookId(book.id)}>
+    <tr onClick={() => store.setSelectedBookId(Number(book.id))}>
       <td style={book.id === store.selectedBookId ? selectedCellStyleLeft : {}}>
         {book.title}
       </td>

@@ -7,8 +7,8 @@ const api = axios.create({
   timeout: 20000,
 });
 
-export const postRequest = async (url: string, data: Book) => {
-  const response = await api.post(url, data);
+export const saveNewRequest = async (data: Book) => {
+  const response = await api.post('book', data);
   return response;
 };
 
