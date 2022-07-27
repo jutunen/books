@@ -57,7 +57,7 @@ const books = [
     title: "The Da Vinci Code",
     author: "Dan Brown",
     description:
-      "The Da Vinci Code follows symbologist Robert Langdon and cryptologist Sophie Neveu after a murder in the Louvre Museum in Paris causes them to become involved in a battle between the Priory of Sion and Opus Dei over the possibility of Jesus Christ and Mary Magdalene having had a child together. ",
+      "The Da Vinci Code follows symbologist Robert Langdon and cryptologist Sophie Neveu after a murder in the Louvre Museum in Paris causes them to become involved in a battle between the Priory of Sion and Opus Dei over the possibility of Jesus Christ and Mary Magdalene having had a child together.",
   },
   {
     title: "Harry Potter and the Chamber of Secrets",
@@ -123,7 +123,7 @@ const books = [
     title: "The Name of the Rose",
     author: "Umberto Eco",
     description:
-      "It is a historical murder mystery set in an Italian monastery in the year 1327, and an intellectual mystery combining semiotics in fiction, biblical analysis, medieval studies, and literary theory. It was translated into English by William Weaver in 1983. ",
+      "It is a historical murder mystery set in an Italian monastery in the year 1327, and an intellectual mystery combining semiotics in fiction, biblical analysis, medieval studies, and literary theory. It was translated into English by William Weaver in 1983.",
   },
   {
     title: "The Eagle Has Landed",
