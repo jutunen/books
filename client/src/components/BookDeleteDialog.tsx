@@ -9,7 +9,7 @@ function BookDeleteDialog({ id, book }: { id: number; book: string }) {
 
   async function handleSubmit() {
     try {
-      await api.deleteRequest('book/' + id);
+      await api.deleteRequest(id);
       store.deleteBook(id);
       store.setSelectedBookId(0);
       store.hideDialogModal();

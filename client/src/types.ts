@@ -4,3 +4,7 @@ interface Book {
   author: string;
   description: string;
 }
+
+interface BookPatch {
+  description: string;
+}

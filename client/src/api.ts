@@ -12,8 +12,13 @@ export const saveNewRequest = async (data: Book) => {
   return response;
 };
 
-export const deleteRequest = async (url: string) => {
-  const response = await api.delete(url);
+export const saveRequest = async (id: number, data: BookPatch) => {
+  const response = await api.patch('book/' + id, data);
+  return response;
+};
+
+export const deleteRequest = async (id: number) => {
+  const response = await api.delete('book/' + id);
   return response;
 };
 

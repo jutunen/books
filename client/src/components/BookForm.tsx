@@ -101,6 +101,23 @@ function BookForm() {
     }
   }
 
+  async function handleSave() {
+    if (!validateInputs()) {
+      return;
+    }
+
+    let book: BookPatch = {
+      description: description.trim(),
+    };
+
+    try {
+      await api.saveRequest(store.selectedBookId, book);
+      store.setBookDescription(store.selectedBookId, book.description);
+    } catch (error) {
+      //store.showErrorModal();
+    }
+  }
+
   return (
     <Form id='bookform'>
       <Form.Group>
@@ -156,6 +173,7 @@ function BookForm() {
           (titleAndAuthorAreIntact() ? false : true) || descriptionIsIntact()
         }
         variant='primary'
+        onClick={() => handleSave()}
       >
         Save
       </Button>

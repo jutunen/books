@@ -27,6 +27,7 @@ class Store {
       hideDialogModal: action,
       newlyAddedBookId: observable,
       setNewlyAddedBookId: action,
+      setBookDescription: action,
     });
   }
 
@@ -42,6 +43,13 @@ class Store {
 
   deleteBook(id: number) {
     this.books = this.books.filter((book) => book.id !== id);
+  }
+
+  setBookDescription(id: number, description: string) {
+    let index = this.books.findIndex((book) => book.id === id);
+    if (index !== -1) {
+      this.books[index].description = description;
+    }
   }
 
   setSelectedBookId(id: number) {
