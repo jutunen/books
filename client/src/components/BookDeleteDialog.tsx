@@ -8,6 +8,7 @@ function BookDeleteDialog({ id, book }: { id: number; book: string }) {
   const store = useContext(StoreContext);
 
   async function handleSubmit() {
+    store.showBusyIndicator();
     try {
       await api.deleteRequest(id);
       store.deleteBook(id);
@@ -15,9 +16,16 @@ function BookDeleteDialog({ id, book }: { id: number; book: string }) {
       store.hideDialogModal();
       //setView('successNote');
       //setUpdateTable(true);
-    } catch (error) {
-      //store.showErrorModal();
+    } catch (error: any) {
+      store.showBookModal({
+        title: 'Failed to delete the book',
+        body: error.message
+          ? error.message
+          : 'Try again later.',
+        button: 'Close',
+      });
     }
+    store.hideBusyIndicator();
   }
 
   return (

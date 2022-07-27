@@ -12,7 +12,7 @@ function BookTable() {
 
   useEffect(() => {
     const fetchAllBooks = async () => {
-      //store.showAppLoader();
+      store.showBusyIndicator();
       try {
         const response = await api.getRequest('book');
         // console.log(response.data);
@@ -28,10 +28,16 @@ function BookTable() {
             }
           }, 5);
         }
-      } catch (error) {
-        //store.showModal(getModalErrorContent(url, error?.response?.status));
+      } catch (error: any) {
+        store.showBookModal({
+          title: "Failed to fetch the books",
+          body: error.message
+            ? error.message
+            : 'Try again later.',
+          button: 'Close',
+        });
       }
-      //store.hideAppLoader();
+      store.hideBusyIndicator();
     };
     fetchAllBooks();
   }, [store, store.newlyAddedBookId]);

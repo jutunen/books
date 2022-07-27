@@ -1,16 +1,16 @@
-.app_left_col {
+.app-left-col {
   height: 100vh;
   overflow-y: auto;
 }
 
-.app_right_col {
+.app-right-col {
   height: 100vh;
 }
 
 /* bootstrap lg breakpoint = 992px */
 @media (max-width: 991px) {
-  .app_left_col,
-  .app_right_col {
+  .app-left-col,
+  .app-right-col {
     height: 50vh;
   }
 }

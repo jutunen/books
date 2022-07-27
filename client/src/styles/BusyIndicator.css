@@ -1,0 +1,30 @@
+.busy-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: busyIndicatorFadeIn 1s;
+  }
+  
+  .busy-indicator > .busy-indicator-shadow {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+  }
+  
+  .busy-indicator > .busy-indicator-shadow > .spinner-border {
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+  
+  @keyframes busyIndicatorFadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }

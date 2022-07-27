@@ -81,6 +81,7 @@ function BookForm() {
   }
 
   async function handleSaveNew() {
+    store.showBusyIndicator();
     if (!validateInputs()) {
       return;
     }
@@ -96,12 +97,18 @@ function BookForm() {
       if (result?.data[0]?.id) {
         store.setNewlyAddedBookId(result?.data[0]?.id);
       }
-    } catch (error) {
-      //store.showErrorModal();
+    } catch (error: any) {
+      store.showBookModal({
+        title: 'Failed to save the book',
+        body: error.message ? error.message : 'Try again later.',
+        button: 'Close',
+      });
     }
+    store.hideBusyIndicator();
   }
 
   async function handleSave() {
+    store.showBusyIndicator();
     if (!validateInputs()) {
       return;
     }
@@ -113,9 +120,14 @@ function BookForm() {
     try {
       await api.saveRequest(store.selectedBookId, book);
       store.setBookDescription(store.selectedBookId, book.description);
-    } catch (error) {
-      //store.showErrorModal();
+    } catch (error: any) {
+      store.showBookModal({
+        title: 'Failed to save the book',
+        body: error.message ? error.message : 'Try again later.',
+        button: 'Close',
+      });
     }
+    store.hideBusyIndicator();
   }
 
   return (

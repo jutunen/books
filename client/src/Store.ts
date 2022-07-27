@@ -11,6 +11,7 @@ class Store {
   bookModalContent: any = {};
   dialogModalIsVisible = false;
   dialogModalContent: any = {};
+  busyIndicatorIsVisible = false;
 
   constructor() {
     makeObservable(this, {
@@ -28,6 +29,9 @@ class Store {
       newlyAddedBookId: observable,
       setNewlyAddedBookId: action,
       setBookDescription: action,
+      busyIndicatorIsVisible: observable,
+      showBusyIndicator: action,
+      hideBusyIndicator: action,
     });
   }
 
@@ -80,6 +84,15 @@ class Store {
   hideDialogModal() {
     this.dialogModalIsVisible = false;
   }
+
+  showBusyIndicator() {
+    this.busyIndicatorIsVisible = true;
+  }
+
+  hideBusyIndicator() {
+    this.busyIndicatorIsVisible = false;
+  }
+
 }
 
 export const globalStore = new Store();
