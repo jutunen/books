@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { createContext } from 'react';
 //import { books } from './testData';
 
@@ -6,7 +6,7 @@ class Store {
   //books = books;
   books: Book[] = [];
   selectedBookId = 0;
-  bookIdToBeSelectedAfterBooksFetch = 0;
+  newlyAddedBookId = 0; // <= a book id that server returns after succesfull save new request
   bookModalIsVisible = false;
   bookModalContent: any = {};
   dialogModalIsVisible = false;
@@ -25,8 +25,8 @@ class Store {
       dialogModalIsVisible: observable,
       showDialogModal: action,
       hideDialogModal: action,
-      bookIdToBeSelectedAfterBooksFetch: observable,
-      setBookIdToBeSelectedAfterBooksFetch: action,
+      newlyAddedBookId: observable,
+      setNewlyAddedBookId: action,
     });
   }
 
@@ -34,10 +34,10 @@ class Store {
     this.books = books;
   }
 
-  setBookIdToBeSelectedAfterBooksFetch(id: number) {
-    console.log(this.bookIdToBeSelectedAfterBooksFetch);
-    this.bookIdToBeSelectedAfterBooksFetch = id;
-    console.log(this.bookIdToBeSelectedAfterBooksFetch);
+  setNewlyAddedBookId(id: number) {
+    console.log(this.newlyAddedBookId);
+    this.newlyAddedBookId = id;
+    console.log(this.newlyAddedBookId);
   }
 
   deleteBook(id: number) {
@@ -48,8 +48,8 @@ class Store {
     this.selectedBookId = id;
   }
 
-  getBookByBookId(id: number) {
-    return this.books.find((book) => book.id === id);
+  getSelectedBook() {
+    return this.books.find((book) => book.id === this.selectedBookId);
   }
 
   showBookModal(content: any) {

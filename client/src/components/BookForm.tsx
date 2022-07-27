@@ -9,7 +9,6 @@ function BookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [description, setDescription] = useState('');
-  // const [validated, setValidated] = useState(false);
   const [titleErrorMsg, setTitleErrorMsg] = useState('');
   const [authorErrorMsg, setAuthorErrorMsg] = useState('');
   const [descriptionErrorMsg, setDescriptionErrorMsg] = useState('');
@@ -19,7 +18,7 @@ function BookForm() {
   useEffect(() => {
     console.log('BookForm useEffect!');
     if (store.selectedBookId) {
-      let book = store.getBookByBookId(store.selectedBookId);
+      let book = store.getSelectedBook();
       if (book) {
         setTitle(book.title);
         setAuthor(book.author);
@@ -30,7 +29,33 @@ function BookForm() {
       setAuthor('');
       setDescription('');
     }
+    setTitleErrorMsg('');
+    setAuthorErrorMsg('');
+    setDescriptionErrorMsg('');
   }, [store, store.selectedBookId]);
+
+  function titleAndAuthorAreIntact() {
+    let selectedBook = store.getSelectedBook();
+    if (selectedBook) {
+      if (
+        title.trim() === selectedBook.title &&
+        author.trim() === selectedBook.author
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function descriptionIsIntact() {
+    let selectedBook = store.getSelectedBook();
+    if (selectedBook) {
+      if (description.trim() === selectedBook.description) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   function validateInputs() {
     let inputsAreValid = true;
@@ -61,18 +86,15 @@ function BookForm() {
     }
 
     let book: Book = {
-      title,
-      author,
-      description,
+      title: title.trim(),
+      author: author.trim(),
+      description: description.trim(),
     };
 
     try {
       let result = await api.saveNewRequest(book);
-      console.log('result:');
-      console.log(result);
-      console.log(result.data[0].id);
       if (result?.data[0]?.id) {
-        store.setBookIdToBeSelectedAfterBooksFetch(result?.data[0]?.id);
+        store.setNewlyAddedBookId(result?.data[0]?.id);
       }
     } catch (error) {
       //store.showErrorModal();
@@ -122,11 +144,23 @@ function BookForm() {
           {descriptionErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Button variant='primary' onClick={() => handleSaveNew()}>
+      <Button
+        disabled={titleAndAuthorAreIntact() ? true : false}
+        variant='primary'
+        onClick={() => handleSaveNew()}
+      >
         Save new
       </Button>
-      <Button variant='primary'>Save</Button>
       <Button
+        disabled={
+          (titleAndAuthorAreIntact() ? false : true) || descriptionIsIntact()
+        }
+        variant='primary'
+      >
+        Save
+      </Button>
+      <Button
+        disabled={titleAndAuthorAreIntact() ? false : true}
         variant='primary'
         onClick={() =>
           store.showDialogModal({

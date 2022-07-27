@@ -6,27 +6,35 @@ import * as api from '../api';
 
 function BookTable() {
   const store = useContext(StoreContext);
-  //const selectedRowRef = useRef(null);
+
+  // ref is used to scroll the table so that the new saved book row becomes visible:
+  const bookRowRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const getData = async () => {
+    const fetchAllBooks = async () => {
       //store.showAppLoader();
       try {
         const response = await api.getRequest('book');
         // console.log(response.data);
         store.setBooks(response.data);
-        if (store.bookIdToBeSelectedAfterBooksFetch) {
-          store.setSelectedBookId(
-            Number(store.bookIdToBeSelectedAfterBooksFetch)
-          );
+        if (store.newlyAddedBookId) {
+          store.setSelectedBookId(Number(store.newlyAddedBookId));
+          setTimeout(() => {
+            if (bookRowRef.current) {
+              bookRowRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+              });
+            }
+          }, 5);
         }
       } catch (error) {
         //store.showModal(getModalErrorContent(url, error?.response?.status));
       }
       //store.hideAppLoader();
     };
-    getData();
-  }, [store, store.bookIdToBeSelectedAfterBooksFetch]);
+    fetchAllBooks();
+  }, [store, store.newlyAddedBookId]);
 
   console.log('BookTable render!');
 
@@ -41,7 +49,11 @@ function BookTable() {
         </thead>
         <tbody>
           {store.books.map((item) => (
-            <TableRow key={item.id} book={item} />
+            <TableRow
+              key={item.id}
+              book={item}
+              reference={item.id === store.newlyAddedBookId ? bookRowRef : null}
+            />
           ))}
         </tbody>
       </Table>
@@ -51,7 +63,7 @@ function BookTable() {
   );
 }
 
-function TableRow({ book }: { book: Book }) {
+function TableRow({ book, reference }: { book: Book; reference: any }) {
   const store = useContext(StoreContext);
 
   const selectedBorderStyle = '2px solid green';
@@ -67,7 +79,10 @@ function TableRow({ book }: { book: Book }) {
   };
 
   return (
-    <tr onClick={() => store.setSelectedBookId(Number(book.id))}>
+    <tr
+      ref={reference ? reference : null}
+      onClick={() => store.setSelectedBookId(Number(book.id))}
+    >
       <td style={book.id === store.selectedBookId ? selectedCellStyleLeft : {}}>
         {book.title}
       </td>
