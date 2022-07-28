@@ -25,11 +25,6 @@ export class BookController {
     return await this.knex('books');
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: number): Promise<any[]> {
-    return await this.knex('books').where({ id });
-  }
-
   @Patch(':id')
   async update(
     @Param('id') id: number,
