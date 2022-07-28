@@ -2,6 +2,7 @@ module.exports = {
   development: {
     client: "postgresql",
     connection: {
+      host: "postgres",
       database: "books",
       user: "books",
       password: "books",
@@ -12,10 +13,10 @@ module.exports = {
     },
     migrations: {
       tableName: "knex_migrations",
-      directory: "./db/migrations",
+      directory: "./migrations",
     },
     seeds: {
-      directory: "./db/seeds",
+      directory: "./seeds",
     },
   },
 };

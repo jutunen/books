@@ -10,6 +10,7 @@ import { KnexModule } from 'nestjs-knex';
         client: 'postgresql',
         useNullAsDefault: true,
         connection: {
+          host: 'postgres',
           database: 'books',
           user: 'books',
           password: 'books',

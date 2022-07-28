@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: books
+      POSTGRES_USER: books
+      POSTGRES_DB: books
+    ports:
+      - 5432:5432
+
+  knex:
+    build: ./db
+    depends_on:
+      - postgres
+
+  server:
+    build: ./server
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - '3100:3100'
+
+  client:
+    build: ./client
+    restart: always
+    depends_on:
+      - server
+    ports:
+      - '3000:3000'
