@@ -146,7 +146,7 @@ function BookForm() {
           {titleErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="form-group">
         <Form.Label>Author</Form.Label>
         <Form.Control
           type='string'
@@ -160,7 +160,7 @@ function BookForm() {
           {authorErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="form-group">
         <Form.Label>Description</Form.Label>
         <Form.Control
           as='textarea'

@@ -14,10 +14,10 @@ function App() {
       <Container fluid>
         <Row>
           <Col xs={12} lg={6} className='app-left-col'>
-            <BookTable />
+            <BookForm />
           </Col>
           <Col xs={12} lg={6} className='app-right-col'>
-            <BookForm />
+            <BookTable />
           </Col>
         </Row>
       </Container>

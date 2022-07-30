@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
 import * as api from '../api';
+import '../styles/BookTable.css';
 
 function BookTable() {
   const store = useContext(StoreContext);
@@ -30,10 +31,8 @@ function BookTable() {
         }
       } catch (error: any) {
         store.showBookModal({
-          title: "Failed to fetch the books",
-          body: error.message
-            ? error.message
-            : 'Try again later.',
+          title: 'Failed to fetch the books',
+          body: error.message ? error.message : 'Try again later.',
           button: 'Close',
         });
       }
@@ -72,7 +71,7 @@ function BookTable() {
 function TableRow({ book, reference }: { book: Book; reference: any }) {
   const store = useContext(StoreContext);
 
-  const selectedBorderStyle = '2px solid green';
+  const selectedBorderStyle = '2px solid blue';
   const selectedCellStyleLeft = {
     borderLeft: selectedBorderStyle,
     borderBottom: selectedBorderStyle,
@@ -88,6 +87,13 @@ function TableRow({ book, reference }: { book: Book; reference: any }) {
     <tr
       ref={reference ? reference : null}
       onClick={() => store.setSelectedBookId(Number(book.id))}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          store.setSelectedBookId(Number(book.id));
+        }
+      }}
+      tabIndex={0}
+      className="tablerow"
     >
       <td style={book.id === store.selectedBookId ? selectedCellStyleLeft : {}}>
         {book.title}
