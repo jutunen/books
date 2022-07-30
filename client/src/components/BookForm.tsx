@@ -140,6 +140,7 @@ function BookForm() {
           value={title}
           onChange={(ev) => setTitle(ev.target.value)}
           isInvalid={!!titleErrorMsg}
+          maxLength={50}
         />
         <Form.Control.Feedback type='invalid'>
           {titleErrorMsg}
@@ -153,6 +154,7 @@ function BookForm() {
           value={author}
           onChange={(ev) => setAuthor(ev.target.value)}
           isInvalid={!!authorErrorMsg}
+          maxLength={50}
         />
         <Form.Control.Feedback type='invalid'>
           {authorErrorMsg}
@@ -168,6 +170,7 @@ function BookForm() {
           value={description}
           onChange={(ev) => setDescription(ev.target.value)}
           isInvalid={!!descriptionErrorMsg}
+          maxLength={500}
         />
         <Form.Control.Feedback type='invalid'>
           {descriptionErrorMsg}
