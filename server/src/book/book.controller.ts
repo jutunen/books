@@ -22,7 +22,7 @@ export class BookController {
 
   @Get()
   async findAll(): Promise<any[]> {
-    return await this.knex('books');
+    return await this.knex('books').orderBy('title', 'asc');
   }
 
   @Patch(':id')
