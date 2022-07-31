@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Table } from 'react-bootstrap';
 import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
-import * as api from '../api';
 import '../styles/BookTable.css';
+import { fetchAllBooks } from '../utils';
 
 function BookTable() {
   const store = useContext(StoreContext);
@@ -12,36 +12,27 @@ function BookTable() {
   const bookRowRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const fetchAllBooks = async () => {
+    const fetchBooks = async () => {
       store.showBusyIndicator();
-      try {
-        const response = await api.getRequest('book');
-        // console.log(response.data);
-        store.setBooks(response.data);
-        if (store.newlyAddedBookId) {
-          store.setSelectedBookId(Number(store.newlyAddedBookId));
-          setTimeout(() => {
-            if (bookRowRef.current) {
-              bookRowRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-              });
-            }
-          }, 5);
-        }
-      } catch (error: any) {
-        store.showBookModal({
-          title: 'Failed to fetch the books',
-          body: error.message ? error.message : 'Try again later.',
-          button: 'Close',
-        });
-      }
+      await fetchAllBooks(store);
       store.hideBusyIndicator();
     };
-    fetchAllBooks();
-  }, [store, store.newlyAddedBookId]);
+    fetchBooks();
+  }, [store]);
 
-  console.log('BookTable render!');
+  useEffect(() => {
+    if (store.newlyAddedBookId) {
+      store.setSelectedBookId(Number(store.newlyAddedBookId));
+      setTimeout(() => {
+        if (bookRowRef.current) {
+          bookRowRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
+      }, 5);
+    }
+  }, [store, store.newlyAddedBookId]);
 
   return (
     <>
@@ -58,17 +49,24 @@ function BookTable() {
               key={item.id}
               book={item}
               reference={item.id === store.newlyAddedBookId ? bookRowRef : null}
+              selectedBookId={store.selectedBookId}
             />
           ))}
         </tbody>
       </Table>
-      <p>Total count: {store.books.length}</p>
-      <p>Currently selected: {store.selectedBookId}</p>
     </>
   );
 }
 
-function TableRow({ book, reference }: { book: Book; reference: any }) {
+function TableRow({
+  book,
+  reference,
+  selectedBookId,
+}: {
+  book: Book;
+  reference: any;
+  selectedBookId: number;
+}) {
   const store = useContext(StoreContext);
 
   const selectedBorderStyle = '2px solid blue';
@@ -93,14 +91,12 @@ function TableRow({ book, reference }: { book: Book; reference: any }) {
         }
       }}
       tabIndex={0}
-      className="tablerow"
+      className='tablerow'
     >
-      <td style={book.id === store.selectedBookId ? selectedCellStyleLeft : {}}>
+      <td style={book.id === selectedBookId ? selectedCellStyleLeft : {}}>
         {book.title}
       </td>
-      <td
-        style={book.id === store.selectedBookId ? selectedCellStyleRight : {}}
-      >
+      <td style={book.id === selectedBookId ? selectedCellStyleRight : {}}>
         {book.author}
       </td>
     </tr>

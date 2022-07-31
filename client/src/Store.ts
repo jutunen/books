@@ -1,12 +1,9 @@
 import { action, makeObservable, observable } from 'mobx';
 import { createContext } from 'react';
-//import { books } from './testData';
-
 class Store {
-  //books = books;
   books: Book[] = [];
   selectedBookId = 0;
-  newlyAddedBookId = 0; // <= a book id that server returns after succesfull save new request
+  newlyAddedBookId = 0; // <= a book id that server returns after a succesfull save new request
   bookModalIsVisible = false;
   bookModalContent: any = {};
   dialogModalIsVisible = false;
@@ -40,9 +37,7 @@ class Store {
   }
 
   setNewlyAddedBookId(id: number) {
-    console.log(this.newlyAddedBookId);
     this.newlyAddedBookId = id;
-    console.log(this.newlyAddedBookId);
   }
 
   deleteBook(id: number) {
@@ -95,5 +90,5 @@ class Store {
 
 }
 
-export const globalStore = new Store();
+const globalStore = new Store();
 export const StoreContext = createContext(globalStore);

@@ -4,6 +4,7 @@ import { StoreContext } from '../Store';
 import { observer } from 'mobx-react-lite';
 import '../styles/BookForm.css';
 import * as api from '../api';
+import { fetchAllBooks } from '../utils';
 
 function BookForm() {
   const [title, setTitle] = useState('');
@@ -16,9 +17,8 @@ function BookForm() {
   const store = useContext(StoreContext);
 
   useEffect(() => {
-    console.log('BookForm useEffect!');
     if (store.selectedBookId) {
-      let book = store.getSelectedBook();
+      const book = store.getSelectedBook();
       if (book) {
         setTitle(book.title);
         setAuthor(book.author);
@@ -35,7 +35,7 @@ function BookForm() {
   }, [store, store.selectedBookId]);
 
   function titleAndAuthorAreIntact() {
-    let selectedBook = store.getSelectedBook();
+    const selectedBook = store.getSelectedBook();
     if (selectedBook) {
       if (
         title.trim() === selectedBook.title &&
@@ -48,7 +48,7 @@ function BookForm() {
   }
 
   function descriptionIsIntact() {
-    let selectedBook = store.getSelectedBook();
+    const selectedBook = store.getSelectedBook();
     if (selectedBook) {
       if (description.trim() === selectedBook.description) {
         return true;
@@ -86,16 +86,17 @@ function BookForm() {
       return;
     }
 
-    let book: Book = {
+    const book: Book = {
       title: title.trim(),
       author: author.trim(),
       description: description.trim(),
     };
 
     try {
-      let result = await api.saveNewRequest(book);
-      if (result?.data[0]?.id) {
-        store.setNewlyAddedBookId(result?.data[0]?.id);
+      const saveResult = await api.sendSaveNewRequest(book);
+      if (saveResult?.data[0]?.id) {
+        await fetchAllBooks(store);
+        store.setNewlyAddedBookId(saveResult?.data[0]?.id);
       }
     } catch (error: any) {
       store.showBookModal({
@@ -113,12 +114,12 @@ function BookForm() {
       return;
     }
 
-    let book: BookPatch = {
+    const book: BookPatch = {
       description: description.trim(),
     };
 
     try {
-      await api.saveRequest(store.selectedBookId, book);
+      await api.sendSaveRequest(store.selectedBookId, book);
       store.setBookDescription(store.selectedBookId, book.description);
     } catch (error: any) {
       store.showBookModal({
@@ -146,7 +147,7 @@ function BookForm() {
           {titleErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="form-group">
+      <Form.Group className='form-group'>
         <Form.Label>Author</Form.Label>
         <Form.Control
           type='string'
@@ -160,7 +161,7 @@ function BookForm() {
           {authorErrorMsg}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="form-group">
+      <Form.Group className='form-group'>
         <Form.Label>Description</Form.Label>
         <Form.Control
           as='textarea'

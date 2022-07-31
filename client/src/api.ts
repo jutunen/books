@@ -7,22 +7,18 @@ const api = axios.create({
   timeout: 20000,
 });
 
-export const saveNewRequest = async (data: Book) => {
-  const response = await api.post('book', data);
-  return response;
+export const sendSaveNewRequest = async (data: Book) => {
+  return await api.post('book', data);
 };
 
-export const saveRequest = async (id: number, data: BookPatch) => {
-  const response = await api.patch('book/' + id, data);
-  return response;
+export const sendSaveRequest = async (id: number, data: BookPatch) => {
+  return await api.patch('book/' + id, data);
 };
 
-export const deleteRequest = async (id: number) => {
-  const response = await api.delete('book/' + id);
-  return response;
+export const sendDeleteRequest = async (id: number) => {
+  return await api.delete('book/' + id);
 };
 
-export const getRequest = async (url: string) => {
-  const response = await api.get(url);
-  return response;
+export const sendGetRequest = async (url: string) => {
+  return await api.get(url);
 };

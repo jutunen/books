@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
-// import { observer } from 'mobx-react-lite';
 import { StoreContext } from '../Store';
 import * as api from '../api';
 
@@ -10,12 +9,10 @@ function BookDeleteDialog({ id, book }: { id: number; book: string }) {
   async function handleSubmit() {
     store.showBusyIndicator();
     try {
-      await api.deleteRequest(id);
+      await api.sendDeleteRequest(id);
       store.deleteBook(id);
       store.setSelectedBookId(0);
       store.hideDialogModal();
-      //setView('successNote');
-      //setUpdateTable(true);
     } catch (error: any) {
       store.showBookModal({
         title: 'Failed to delete the book',
