@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -27,7 +28,7 @@ export class BookController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateBookDto: UpdateBookDto,
   ): Promise<any[]> {
     return await this.knex('books')
@@ -36,7 +37,7 @@ export class BookController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<any[]> {
+  async remove(@Param('id', ParseIntPipe) id: string): Promise<any[]> {
     return await this.knex('books').where({ id }).del();
   }
 }
