@@ -81,10 +81,11 @@ function BookForm() {
   }
 
   async function handleSaveNew() {
-    store.showBusyIndicator();
     if (!validateInputs()) {
       return;
     }
+
+    store.showBusyIndicator();
 
     const book: Book = {
       title: title.trim(),
@@ -109,10 +110,11 @@ function BookForm() {
   }
 
   async function handleSave() {
-    store.showBusyIndicator();
     if (!validateInputs()) {
       return;
     }
+    
+    store.showBusyIndicator();
 
     const book: BookPatch = {
       description: description.trim(),
